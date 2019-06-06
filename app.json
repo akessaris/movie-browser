@@ -1,18 +1,25 @@
 {
   "expo": {
-    "name": "project2",
-    "description": "This project is really great.",
-    "slug": "project2",
-    "privacy": "public",
-    "sdkVersion": "25.0.0",
-    "platforms": ["ios", "android"],
+    "name": "Movie Browser",
+    "description": "Search movies",
+    "slug": "snack-rkd81-cTV",
+    "privacy": "unlisted",
+    "sdkVersion": "32.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+    "primaryColor": "#cccccc",
+    "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
+    "loading": {
+      "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
+      "hideExponentText": false
+    },
+    "packagerOpts": {
+      "assetExts": [
+        "ttf",
+        "mp4",
+        "otf",
+        "xml"
+      ]
     },
     "ios": {
       "supportsTablet": true

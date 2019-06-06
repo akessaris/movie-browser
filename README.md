@@ -19,9 +19,6 @@ and view additional information about any movies they select. Check out the
 
 The aesthetics of the app are up to you!
 
-### Challenge (Not Required)
-- Coming soon!
-
 ## Getting Started
 First, head to [this link](https://docs.expo.io/versions/latest/introduction/installation.html)
 to install Expo. You'll need the XDE for your computer and the mobile client
