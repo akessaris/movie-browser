@@ -1,3 +1,4 @@
+
 // add keys to based on index
 const addKeys = (val, key) => ({key: key+"", ...val})
 
@@ -16,4 +17,19 @@ export const fetchMovies = async(name) => {
     }
 }
 
-//implement get movies by id
+export const fetchMovieDetails = async(movieId) => {
+    const url = `http://www.omdbapi.com/?apikey=e3195fb3&i=${movieId}&plot=full`
+    try {
+        const response = await fetch(url);
+        const result = await (JSON.parse(response["_bodyInit"]));
+        console.log("FETCHED RESULT");
+        console.log(result);
+        if (result === undefined) {
+            return;
+        }
+        return result;
+    }
+    catch (e) {
+        return;
+    }
+}

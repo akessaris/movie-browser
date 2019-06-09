@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 import MoviesList from "../components/MoviesList";
 import {fetchMovies} from '../api';
@@ -7,7 +7,7 @@ import {fetchMovies} from '../api';
 class LogoTitle extends React.Component {
   render() {
     return (
-    	<Text>Movie/TV Browser</Text>
+    	<Text style={{color:"white", fontWeight:"bold", fontSize: 25}}>Movie/TV Browser</Text>
     );
 	}
 }
@@ -36,12 +36,10 @@ export default class HomeScreen extends React.Component {
 	}
 
 	handleSelectMovie = movie => {
+		console.log(movie);
 		this.props.navigation.navigate('Details', {
-			poster: movie.Poster,
-			title: movie.Title,
-			type: movie.Type,
-			year: movie.Year,
-			imdbId: movie.imdbId,
+			title: movie["Title"],
+			imdbID: movie['imdbID'],
 		});
 	}
 
