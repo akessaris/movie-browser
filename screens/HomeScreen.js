@@ -1,73 +1,87 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+
+import MoviesList from "../components/MoviesList";
+import {fetchMovies} from '../api';
 
 class LogoTitle extends React.Component {
   render() {
     return (
-    	<Text>Home</Text>
+    	<Text>Movie/TV Browser</Text>
     );
 	}
 }
 
 export default class HomeScreen extends React.Component {
-	static navigationOptions = ({navigation}) => {
-		const params = navigation.state.params || {};
+	state = {
+		query: '',
+		movies: '',
+	}
 
-		return {
-			headerLeft:(
-				<Button
-					onPress={() => navigation.navigate('MyModal')}
-					title="Info"
-					color="#fff"
-				/>
-			),
-			headerTitle: <LogoTitle />,
-			headerRight: (
-				<Button
-					onPress={navigation.getParam('increaseCount')}
-					title="+1"
-					color="#fff"
-				/>
-			),
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.query !== prevState.query) {
+			this.getMovies(this.state.query);
 		}
 	}
 
-	componentDidMount() {
-		this.props.navigation.setParams({increaseCount: this._increaseCount});
+	getMovies = async(query) => {
+		try {
+			const movies = await fetchMovies(query);
+			this.setState({movies});
+		}
+		catch (e) {
+			console.log(e);
+			return;
+		}
 	}
 
-	state = {
-		count: 0,
+	handleSelectMovie = movie => {
+		this.props.navigation.navigate('Details', {
+			poster: movie.Poster,
+			title: movie.Title,
+			type: movie.Type,
+			year: movie.Year,
+			imdbId: movie.imdbId,
+		});
 	}
 
-	_increaseCount = () => {
-		this.setState({count: this.state.count+1})
+	static navigationOptions = ({navigation}) => {
+		return {
+			headerTitle: <LogoTitle />,
+		}
 	}
 
-  	render() {
-	    return (
-	      <View style={styles.container}>
-	        <Text>Home Screen</Text>
-					<Text>Count: {this.state.count}</Text>
-	        <Button 
-	        	title="Details" 
-	        	onPress={() => {
-	          		this.props.navigation.navigate("Details", {
-		          		itemId: 86,
-		          		otherParam: 'waka waka',
-	          		});
-	        	}}
-	        />
-	      </View>
-	    )
+	render() {
+		return (
+			<View style={styles.container}>
+				<TextInput
+					style={styles.searchBox}
+					placeholder="Search movies"
+					value={this.state.query}
+					onChangeText={(query) => this.setState({query})}
+				/>
+				{this.state.movies ? <MoviesList movies={this.state.movies} onSelectMovie={this.handleSelectMovie}/> : <Text style={styles.noResults}>No Results</Text>}
+			</View>
+		)
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+	},
+	searchBox: {
+		height:50, 
+		borderColor: 'gray', 
+		borderWidth: 3,
+		alignSelf: "stretch",
+		textAlign: "center",
+		padding: 10,
+		margin:5,
+	},
+	noResults: {
+		marginTop: 5,
+		fontSize: 15,
+	},
 });
